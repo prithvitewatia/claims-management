@@ -7,4 +7,4 @@ A mini project done completed in stage 4 of CTS internship period
 ### To-Do List
 
 - [ ] Properly document readme
-- [ ] Add a license
+- [x] Add a license
