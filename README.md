@@ -18,3 +18,6 @@ Details to be added soon.
 
 - [ ] Properly document readme
 - [x] Add a license
+- [ ] Create EntityNotFoundException class
+- [ ] ApplicationException class
+- [ ] Create InternalException class
