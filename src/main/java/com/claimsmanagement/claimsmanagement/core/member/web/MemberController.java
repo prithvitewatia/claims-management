@@ -24,7 +24,7 @@ public class MemberController {
     }
     @GetMapping
     @ResponseBody
-    public Page<MemberView> getAllMembers(@PageableDefault(sort = "id",
+    public Page<MemberView> getAllMembers(@PageableDefault(sort = "memberId",
             direction = Sort.Direction.DESC)Pageable pageable){
         return memberService.getAllMembers(pageable);
     }
