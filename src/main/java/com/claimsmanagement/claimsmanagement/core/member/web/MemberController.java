@@ -18,19 +18,16 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
     @RequestMapping("/{id}")
-    @ResponseBody
     public MemberView getMemberById(@PathVariable("id") Long id){
         return memberService.getMemberById(id);
     }
     @GetMapping
-    @ResponseBody
     public Page<MemberView> getAllMembers(@PageableDefault(sort = "memberId",
             direction = Sort.Direction.DESC)Pageable pageable){
         return memberService.getAllMembers(pageable);
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public MemberView create(@RequestBody @Valid MemberBaseRequest memberBaseRequest){
         return memberService.create(memberBaseRequest);
     }
@@ -42,7 +39,6 @@ public class MemberController {
     }
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @ResponseBody
     public MemberView updateMember(@PathVariable("id") Long id
             ,@RequestBody @Valid MemberBaseRequest memberBaseRequest){
         Member member=memberService.findMemberOrThrow(id);
