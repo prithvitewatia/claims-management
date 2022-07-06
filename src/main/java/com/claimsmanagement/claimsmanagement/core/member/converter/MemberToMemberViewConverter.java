@@ -17,7 +17,7 @@ public class MemberToMemberViewConverter implements Converter<Member,MemberView>
         memberView.setMemberName(member.getMemberName());
         memberView.setEmail(member.getEmail());
         memberView.setPhoneNo(member.getPhoneNo());
-        memberView.setAddress(memberView.getAddress());
+        memberView.setAddress(member.getAddress());
         return memberView;
     }
 }
