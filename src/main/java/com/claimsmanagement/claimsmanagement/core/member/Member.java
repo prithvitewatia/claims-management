@@ -1,5 +1,7 @@
 package com.claimsmanagement.claimsmanagement.core.member;
 
+import com.claimsmanagement.claimsmanagement.core.policy.Policy;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -42,4 +46,7 @@ public class Member {
     private String phoneNo;
     @Column(length = 1000)
     private String address;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    private Set<Policy> policies=new HashSet<>();
 }
