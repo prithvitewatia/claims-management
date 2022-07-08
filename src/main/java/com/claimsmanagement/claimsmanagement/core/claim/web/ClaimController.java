@@ -14,6 +14,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/claim")
+@CrossOrigin(origins = "*",allowedHeaders = "*",methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE} )
+//@CrossOrigin(origins = "http://localhost:4402",methods = )
 public class ClaimController {
     @Autowired
     private ClaimService claimService;

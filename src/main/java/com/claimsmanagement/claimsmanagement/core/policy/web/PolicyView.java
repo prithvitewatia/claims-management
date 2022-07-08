@@ -17,5 +17,4 @@ public class PolicyView {
     private LocalDate policyEndDate;
     private String policyStatus;
     private String description;
-    private MemberView memberView;
 }

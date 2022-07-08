@@ -21,7 +21,6 @@ public class PolicyToPolicyViewConverter implements Converter<Policy, PolicyView
         policyView.setPolicyStatus(policy.getPolicyStatus());
         policyView.setPolicyStartDate(policy.getPolicyStartDate());
         policyView.setPolicyEndDate(policy.getPolicyEndDate());
-        policyView.setMemberView(memberViewConverter.convert(policy.getMember()));
         return policyView;
     }
 }

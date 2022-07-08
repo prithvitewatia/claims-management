@@ -23,7 +23,6 @@ public class ClaimToClaimViewConverter implements Converter<Claim, ClaimView> {
         claimView.setClaimAmount(claim.getClaimAmount());
         claimView.setRemarks(claim.getRemarks());
         claimView.setClaimStatus(claim.getClaimStatus());
-        claimView.setPolicyView(policyViewConverter.convert(claim.getPolicy()));
         return claimView;
     }
 }

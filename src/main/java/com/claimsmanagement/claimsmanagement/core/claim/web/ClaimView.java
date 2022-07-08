@@ -18,5 +18,4 @@ public class ClaimView {
     private Integer claimAmount;
     private String claimStatus;
     private String remarks;
-    private PolicyView policyView;
 }

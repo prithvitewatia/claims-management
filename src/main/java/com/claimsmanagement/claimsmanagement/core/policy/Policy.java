@@ -43,6 +43,6 @@ public class Policy {
     private Member member;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Claim> claims=new HashSet<>();
 }
