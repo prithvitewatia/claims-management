@@ -1,10 +1,8 @@
 package com.claimsmanagement.claimsmanagement.core.policy.web;
 
-import com.claimsmanagement.claimsmanagement.core.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import java.time.LocalDate;
 
 @Getter
@@ -17,5 +15,4 @@ public class PolicyRequest{
     private LocalDate policyEndDate;
     private String policyStatus;
     private String description;
-    private Member member;
 }

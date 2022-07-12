@@ -3,8 +3,6 @@ package com.claimsmanagement.claimsmanagement.core.claim;
 import com.claimsmanagement.claimsmanagement.core.claim.converter.ClaimToClaimViewConverter;
 import com.claimsmanagement.claimsmanagement.core.claim.web.ClaimRequest;
 import com.claimsmanagement.claimsmanagement.core.claim.web.ClaimView;
-import com.claimsmanagement.claimsmanagement.core.member.Member;
-import com.claimsmanagement.claimsmanagement.core.member.MemberRepo;
 import com.claimsmanagement.claimsmanagement.core.policy.Policy;
 import com.claimsmanagement.claimsmanagement.core.policy.PolicyRepo;
 import com.claimsmanagement.claimsmanagement.error.EntityNotFoundException;
@@ -20,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClaimServiceImpl implements ClaimService {
@@ -27,8 +26,6 @@ public class ClaimServiceImpl implements ClaimService {
     private ClaimRepo claimRepo;
     @Autowired
     private ClaimToClaimViewConverter claimViewConverter;
-    @Autowired
-    private MemberRepo memberRepo;
     @Autowired
     private PolicyRepo policyRepo;
     @Autowired
@@ -63,11 +60,6 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     private void prepare(Claim claim, ClaimRequest claimRequest) throws EntityNotFoundException {
-        // Which member is requesting the claim
-        Member member = memberRepo.findById(claimRequest.getMemberId()).orElseThrow(
-                () -> new EntityNotFoundException(messageUtil.getMessage("member.NotFound",
-                        claimRequest.getMemberId()))
-        );
         // setting policy details
         Policy policy = new Policy();
         policy.setPolicyId(claimRequest.getPolicyId());
@@ -77,21 +69,21 @@ public class ClaimServiceImpl implements ClaimService {
         policy.setPolicyEndDate(claimRequest.getPolicyEndDate());
         if (LocalDate.now().compareTo(claimRequest.getPolicyEndDate()) > 0) {
             policy.setPolicyStatus("Expired");
-        }
-        else{
+        } else {
             policy.setPolicyStatus("Not Expired");
         }
-        policy.setDescription(claimRequest.getPolicyDescription().orElse(null));
-        policy.setMember(member);
+        policy.setDescription(claimRequest.getPolicyDescription());
+        policy.setMemberId(claimRequest.getMemberId());
         policyRepo.save(policy);
         // setting the claim
         claim.setDescription(claimRequest.getClaimDescription());
         claim.setClaimRaisedDate(claimRequest.getClaimRaisedDate());
-        claim.setClaimSettledDate(claimRequest.getClaimSettledDate().orElse(null));
+        claim.setClaimSettledDate(claimRequest.getClaimSettledDate());
         claim.setClaimAmount(claimRequest.getClaimAmount());
         claim.setClaimStatus(claimRequest.getClaimStatus());
-        claim.setRemarks(claimRequest.getRemarks().orElse("No Remarks"));
-        claim.setPolicy(policy);
+        claim.setRemarks(claimRequest.getRemarks());
+        claim.setMemberId(claimRequest.getMemberId());
+        claim.setPolicyId(claimRequest.getPolicyId());
     }
 
     @Transactional
@@ -107,5 +99,20 @@ public class ClaimServiceImpl implements ClaimService {
         this.prepare(claim, claimRequest);
         Claim updateClaim = claimRepo.save(claim);
         return claimViewConverter.convert(updateClaim);
+    }
+
+    @Override
+    public List<ClaimView> getAllClaimsByMember(Long memberId) {
+        return claimRepo.findClaimByMemberId(memberId).stream()
+                .map(claim -> claimViewConverter.convert(claim))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ClaimView> getAllPendingClaims(){
+        return claimRepo.findClaimByClaimStatusIs("Pending")
+                .stream()
+                .map(claim -> claimViewConverter.convert(claim))
+                .collect(Collectors.toList());
     }
 }

@@ -59,7 +59,6 @@ public class PolicyServiceImpl implements PolicyService{
         policy.setPolicyEndDate(policyRequest.getPolicyEndDate());
         policy.setPolicyStatus(policyRequest.getPolicyStatus());
         policy.setDescription(policyRequest.getDescription());
-        policy.setMember(policyRequest.getMember());
     }
 
     @Transactional

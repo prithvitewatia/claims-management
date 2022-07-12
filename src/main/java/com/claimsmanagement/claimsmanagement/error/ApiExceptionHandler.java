@@ -18,6 +18,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request){
         return prepareRestException(ex,request, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler({UnauthorizedException.class})
+    public ResponseEntity<Object> handleUnauthorizedAccessException(Exception ex,WebRequest request){
+        return prepareRestException(ex,request,HttpStatus.UNAUTHORIZED);
+    }
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(
             MissingServletRequestParameterException ex,

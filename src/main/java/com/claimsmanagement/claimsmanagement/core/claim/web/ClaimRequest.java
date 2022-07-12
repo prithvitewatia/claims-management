@@ -28,17 +28,17 @@ public class ClaimRequest{
     private LocalDate policyStartDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate policyEndDate;
-    private Optional<String> policyDescription;
+    private String policyDescription;
     // claim related attributes
     @NotBlank
     private String claimDescription;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate claimRaisedDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Optional<LocalDate> claimSettledDate;
+    private LocalDate claimSettledDate;
     @NotNull
     private Integer claimAmount;
     @NotBlank
     private String claimStatus;
-    private Optional<String> remarks;
+    private String remarks;
 }
